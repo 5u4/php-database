@@ -2,7 +2,7 @@
 
 namespace Senhung\MySQL\Schema\Table;
 
-use Senhung\MySQL\Schema\Table\Constraint;
+use Senhung\MySQL\Schema\Table\Prototypes\Constraint;
 
 class Column
 {

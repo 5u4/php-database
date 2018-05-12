@@ -27,7 +27,7 @@ function indicate(string $functionName, string $description = null): void
 }
 
 /* Load all classes in folder */
-Loader::load('src');
+Loader::load('src', -1, ['src/Schema/Table/Prototypes']);
 
 /* Run all test scripts in folder */
 Loader::load('examples');

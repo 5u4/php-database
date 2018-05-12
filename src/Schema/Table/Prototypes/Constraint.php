@@ -1,6 +1,6 @@
 <?php
 
-namespace Senhung\MySQL\Schema\Table\Constraints;
+namespace Senhung\MySQL\Schema\Table\Prototypes;
 
 class Constraint
 {

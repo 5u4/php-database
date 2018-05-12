@@ -19,6 +19,6 @@
     "require": {
         "php": ">=7.1.0",
         "senhung/config-read-write": ">=1.1.0",
-        "senhung/php-loader": ">=1.0.0"
+        "senhung/php-loader": ">=1.1.0"
     }
 }

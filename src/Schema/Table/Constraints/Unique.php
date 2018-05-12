@@ -2,7 +2,7 @@
 
 namespace Senhung\MySQL\Schema\Table\Constraints;
 
-require_once 'Constraint.php';
+use Senhung\MySQL\Schema\Table\Prototypes\Constraint;
 
 class Unique extends Constraint
 {

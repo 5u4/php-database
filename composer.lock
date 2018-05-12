@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "58397251bbe14a4e98ec462ef7c2cd3a",
+    "content-hash": "c5d248d8bfd8241ae07f9178c06623b1",
     "packages": [
         {
             "name": "senhung/config-read-write",
@@ -47,16 +47,16 @@
         },
         {
             "name": "senhung/php-loader",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/senhungwong/php-loader.git",
-                "reference": "32ff66de72a79a3c9e11d695d694b04289ec9b46"
+                "reference": "c448004bf8d4843064d51702ecbfff86cfdfbad5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/senhungwong/php-loader/zipball/32ff66de72a79a3c9e11d695d694b04289ec9b46",
-                "reference": "32ff66de72a79a3c9e11d695d694b04289ec9b46",
+                "url": "https://api.github.com/repos/senhungwong/php-loader/zipball/c448004bf8d4843064d51702ecbfff86cfdfbad5",
+                "reference": "c448004bf8d4843064d51702ecbfff86cfdfbad5",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Some helper functions for building a structured php scripts",
-            "time": "2018-05-12T16:19:07+00:00"
+            "time": "2018-05-12T21:14:02+00:00"
         }
     ],
     "packages-dev": [],

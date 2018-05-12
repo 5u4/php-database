@@ -17,7 +17,7 @@ class QueryBuilder
     /**
      * @return string
      */
-    public function getQuery(): string
+    public function __toString(): string
     {
         return $this->query;
     }
@@ -77,11 +77,22 @@ class QueryBuilder
         return $this;
     }
 
-    public function definition(array $columns, array $constraints = null): QueryBuilder
+    /**
+     * @param array $columns
+     * @param array $constraints
+     * @return QueryBuilder
+     */
+    public function definition(array $columns, array $constraints = []): QueryBuilder
     {
-        foreach ($columns as $column) {
-            $this->query .= $column;
+        $this->query .= "(" . implode(", ", $columns);
+
+        if ($constraints) {
+            $this->query .= ", " . implode(", ", $constraints);
         }
+
+        $this->query .= ") ";
+
+        return $this;
     }
 
     public function tableOptions(array $options): QueryBuilder

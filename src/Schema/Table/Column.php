@@ -18,11 +18,15 @@ class Column
      * Column constructor.
      * @param string $name
      * @param DataType $type
+     * @param Constraint|array $constraint
      */
-    public function __construct(string $name, DataType $type)
+    public function __construct(string $name, DataType $type, $constraint = [])
     {
         $this->name = $name;
         $this->type = $type;
+        gettype($constraint) == 'object' ?
+            $this->constraints = [$constraint] :
+            $this->constraints = $constraint;
     }
 
     /**

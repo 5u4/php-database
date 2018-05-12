@@ -8,6 +8,14 @@
             "email": "0x53656e@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Senhung\\MySQL\\Connection\\": "src/Database"
+        },
+        "files": [
+            "src/Database/Connection.php"
+        ]
+    },
     "require": {
         "php": ">=7.1.0",
         "senhung/config-read-write": ">=1.1.0",

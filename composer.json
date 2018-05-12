@@ -1,0 +1,16 @@
+{
+    "name": "senhung/php-mysql-database",
+    "description": "PHP interactions with MySQL",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Senhung Wong",
+            "email": "0x53656e@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "senhung/config-read-write": ">=1.1.0",
+        "senhung/php-loader": ">=1.0.0"
+    }
+}

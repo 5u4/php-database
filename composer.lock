@@ -1,0 +1,98 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "58397251bbe14a4e98ec462ef7c2cd3a",
+    "packages": [
+        {
+            "name": "senhung/config-read-write",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/senhungwong/config-read-write.git",
+                "reference": "4caa9445630455335f3a398181c4a919b913ca7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/senhungwong/config-read-write/zipball/4caa9445630455335f3a398181c4a919b913ca7e",
+                "reference": "4caa9445630455335f3a398181c4a919b913ca7e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Senhung\\Config\\": "src/Configuration/"
+                },
+                "files": [
+                    "src/Configuration/Configuration.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Senhung Wong",
+                    "email": "0x53656e@gmail.com"
+                }
+            ],
+            "description": "A package for reading and writing config file",
+            "time": "2018-04-28T17:41:42+00:00"
+        },
+        {
+            "name": "senhung/php-loader",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/senhungwong/php-loader.git",
+                "reference": "32ff66de72a79a3c9e11d695d694b04289ec9b46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/senhungwong/php-loader/zipball/32ff66de72a79a3c9e11d695d694b04289ec9b46",
+                "reference": "32ff66de72a79a3c9e11d695d694b04289ec9b46",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Senhung\\Loader\\Loader\\": "src/"
+                },
+                "files": [
+                    "src/Loader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Senhung Wong",
+                    "email": "0x53656e@gmail.com"
+                }
+            ],
+            "description": "Some helper functions for building a structured php scripts",
+            "time": "2018-05-12T16:19:07+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1.0"
+    },
+    "platform-dev": []
+}

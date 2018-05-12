@@ -12,43 +12,26 @@ class Connection
      *
      * @var mysqli $database
      */
-    private static $database;
+    private $database;
 
     /**
-     * Variable to determine if the static object exists
-     *
-     * @var bool
-     */
-    private static $initialized = false;
-
-    /**
-     * Initialize static object
+     * Connection constructor.
      * @param string $databaseName
      */
-    private static function initialize(string $databaseName)
+    public function __construct(string $databaseName = 'DB')
     {
-        if (self::$initialized)
-            return;
-
-        self::$database = self::connect($databaseName);
-        self::$initialized = true;
+        $this->connect($databaseName);
     }
 
     /**
      * Connecting to MySQL
      *
      * @param string $databaseName
-     * @return mysqli
+     * @return void
      */
-    private static function connect(string $databaseName): mysqli
+    private function connect(string $databaseName): void
     {
-        /* Set config path */
-        Configuration::setPath('.env');
-
-        /* Initialize config */
-        Configuration::initializeConfigs();
-
-        $database = new mysqli(
+        $this->database = new mysqli(
             Configuration::read($databaseName . '_HOST'),
             Configuration::read($databaseName . '_USERNAME'),
             Configuration::read($databaseName . '_PASSWORD'),
@@ -56,28 +39,41 @@ class Connection
             Configuration::read($databaseName . '_PORT')
         );
 
-        if ($database->connect_errno) {
-            die("Database connection error (" . $database->connect_errno . "): " . $database->connect_error . "\n");
+        if ($this->database->connect_errno) {
+            die("Database connection error (" . $this->database->connect_errno . "): " . $this->database->connect_error . "\n");
         }
-
-        return $database;
     }
 
     /**
      * @param string $query
-     * @param string $databaseName
-     * @return bool|\mysqli_result
+     * @param bool $parsed
+     * @return array|\mysqli_result
      */
-    public static function query(string $query, string $databaseName = 'DB')
+    public function query(string $query, bool $parsed = true)
     {
-        self::initialize($databaseName);
-
-        $result = self::$database->query($query);
+        $result = $this->database->query($query);
 
         if (!$result) {
-            exit(mysqli_error(self::$database) . "\n" . $query . "\n\n");
+            exit(mysqli_error($this->database) . "\n" . $query . "\n\n");
         }
 
-        return $result;
+        return $parsed ? $this->parseResult($result) : $result;
+    }
+
+    /**
+     * Parse mysql result to array
+     *
+     * @param \mysqli_result $result
+     * @return array
+     */
+    private function parseResult(\mysqli_result $result): array
+    {
+        $parsedResults = [];
+
+        while ($parsedResult = $result->fetch_assoc()) {
+            $parsedResults[] = $parsedResult;
+        }
+
+        return $parsedResults;
     }
 }

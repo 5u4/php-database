@@ -1,0 +1,33 @@
+<?php
+
+namespace Senhung\MySQL\Test;
+
+require_once 'vendor/autoload.php';
+
+use Senhung\Loader\Loader;
+use Senhung\Config\Configuration;
+
+/* Set config path */
+Configuration::setPath('.env');
+
+/* Initialize config */
+Configuration::initializeConfigs();
+
+/**
+ * @param string $functionName
+ * @param string|null $description
+ */
+function indicate(string $functionName, string $description = null): void
+{
+    print "/* -----------------------------------------------------------\n";
+    print " | " . $functionName . "\n";
+    print " | -----------------------------------------------------------\n";
+    print " | " . $description . "\n";
+    print " */\n\n";
+}
+
+/* Load all classes in Database folder */
+Loader::load('src/Database');
+
+/* Run all test scripts in Database folder */
+Loader::load('examples/Database');

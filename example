@@ -31,5 +31,3 @@ Loader::load('src', -1, ['src/Schema/Table/Prototypes']);
 
 /* Run all test scripts in folder */
 Loader::load('examples');
-
-

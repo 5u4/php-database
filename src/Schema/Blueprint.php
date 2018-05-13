@@ -55,6 +55,8 @@ class Blueprint
     private const JSON = 'JSON';
     private const ENUM = 'ENUM';
     private const TIMESTAMP = 'TIMESTAMP';
+    private const FLOAT = 'FLOAT';
+    private const DOUBLE = 'DOUBLE';
     private const DECIMAL = 'DECIMAL';
 
     /**
@@ -157,6 +159,32 @@ class Blueprint
     }
 
     /**
+     * Create a float type column
+     *
+     * @param string $columnName
+     * @param int $length
+     * @param int $decimals
+     * @return Blueprint
+     */
+    public function float(string $columnName, int $length, int $decimals): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::FLOAT, $length, $decimals);
+    }
+
+    /**
+     * Create a double type column
+     *
+     * @param string $columnName
+     * @param int $length
+     * @param int $decimals
+     * @return Blueprint
+     */
+    public function double(string $columnName, int $length, int $decimals): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::DOUBLE, $length, $decimals);
+    }
+
+    /**
      * Create a decimal type column
      *
      * @param string $columnName
@@ -166,7 +194,7 @@ class Blueprint
      */
     public function decimal(string $columnName, int $length, int $decimals = null): Blueprint
     {
-        return $this->baseTypeDeclaration($columnName, Blueprint::DECIMAL);
+        return $this->baseTypeDeclaration($columnName, Blueprint::DECIMAL, $length, $decimals);
     }
 
     /* ---------------------------------------------------------------------------------
@@ -306,14 +334,14 @@ class Blueprint
      * @param int|null $length
      * @return Blueprint
      */
-    private function baseTypeDeclaration(string $columnName, string $baseType, int $length = null): Blueprint
+    private function baseTypeDeclaration(string $columnName, string $baseType, int $length = null, int $decimal = null): Blueprint
     {
         $this->mostRecentColumn = $columnName;
 
         $type = $baseType;
 
         if (isset($length)) {
-            $type .= '(' . (string)$length . ')';
+            $type .= '(' . (string)$length . ($decimal ? ", " . (string)$decimal : '') . ')';
         }
 
         $this->columns[$columnName] = [$type];

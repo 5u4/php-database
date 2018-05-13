@@ -17,7 +17,9 @@ $table->enum('something', ['first', 'second']);
 
 $table->timestamp('timestamp', 3);
 
-$table->decimal('num', 2, 3);
+$table->decimal('decimal', 2);
+
+$table->double('double', 3, 1);
 
 $table->unique(['someInt', 'someStr']);
 

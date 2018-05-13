@@ -2,10 +2,6 @@
 
 namespace Senhung\MySQL\Schema;
 
-/**
- * Class Blueprint
- * @package Senhung\ORM\Database
- */
 class Blueprint
 {
     /**

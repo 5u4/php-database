@@ -49,7 +49,7 @@ class Connection
      * @param bool $parsed
      * @return array|\mysqli_result
      */
-    public function query(string $query, bool $parsed = true)
+    public function query(string $query, bool $parsed = false)
     {
         $result = $this->database->query($query);
 

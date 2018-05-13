@@ -7,7 +7,7 @@ use Senhung\MySQL\Schema\Schema;
 
 \Senhung\MySQL\Test\indicate('Schema', '');
 
-Schema::create('users', function (Blueprint $table) {
-    $table->int('id')->primary()->autoIncrement();
-    $table->string('name')->unique();
-});
+//Schema::create('users', function (Blueprint $table) {
+//    $table->int('id')->primary()->autoIncrement();
+//    $table->string('name')->unique();
+//});

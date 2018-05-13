@@ -44,20 +44,30 @@ class Blueprint
      */
     private const DEFAULT_STRING_LENGTH = 50;
     private const DEFAULT_INT_LENGTH = 11;
+    private const DEFAULT_TEXT_LENGTH = 65535;
 
     /**
      * Base Types
      */
-    private const STRING_BASETYPE = 'VARCHAR';
-    private const INT_BASETYPE = 'INT';
+    private const STRING = 'VARCHAR';
+    private const INT = 'INT';
+    private const TEXT = 'TEXT';
+    private const JSON = 'JSON';
+    private const ENUM = 'ENUM';
+    private const TIMESTAMP = 'TIMESTAMP';
+    private const DECIMAL = 'DECIMAL';
 
     /**
      * Constraints
      */
     private const NOT_NULL = 'NOT NULL';
+    private const NULL = 'NULL';
     private const PRIMARY_KEY = 'PRIMARY KEY';
     private const UNIQUE = 'UNIQUE';
     private const AUTO_INCREMENT = 'AUTO_INCREMENT';
+    private const DEFAULT = 'DEFAULT';
+    private const INDEX = 'INDEX';
+    private const UNSIGNED = 'UNSIGNED';
 
     /**
      * Blueprint constructor.
@@ -69,6 +79,194 @@ class Blueprint
         $this->tableName = $tableName;
         $this->ifNotExists = $ifNotExists;
     }
+
+    /* ---------------------------------------------------------------------------------
+     | Data Types
+     | ---------------------------------------------------------------------------------
+     */
+
+    /**
+     * Create a string type column
+     *
+     * @param string $columnName
+     * @param int $length
+     * @return Blueprint
+     */
+    public function string(string $columnName, int $length = Blueprint::DEFAULT_STRING_LENGTH): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::STRING, $length);
+    }
+
+    /**
+     * Create an int type column
+     *
+     * @param string $columnName
+     * @param int $length
+     * @return Blueprint
+     */
+    public function int(string $columnName, int $length = Blueprint::DEFAULT_INT_LENGTH): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::INT, $length);
+    }
+
+    /**
+     * Create a text type column
+     *
+     * @param string $columnName
+     * @param int $length
+     * @return Blueprint
+     */
+    public function text(string $columnName, int $length = Blueprint::DEFAULT_TEXT_LENGTH): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::TEXT, $length);
+    }
+
+    /**
+     * Create a Json type column
+     *
+     * @param string $columnName
+     * @return Blueprint
+     */
+    public function json(string $columnName): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::JSON);
+    }
+
+    /**
+     * Create an enum type column
+     *
+     * @param string $columnName
+     * @param array $values
+     * @return Blueprint
+     */
+    public function enum(string $columnName, array $values): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::ENUM . "('" . implode("', '", $values) . "')");
+    }
+
+    /**
+     * Create a timestamp type column
+     *
+     * @param string $columnName
+     * @param int|null $fsp
+     * @return Blueprint
+     */
+    public function timestamp(string $columnName, int $fsp = null): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::TIMESTAMP, $fsp);
+    }
+
+    /**
+     * Create a decimal type column
+     *
+     * @param string $columnName
+     * @param int $length
+     * @param int|null $decimals
+     * @return Blueprint
+     */
+    public function decimal(string $columnName, int $length, int $decimals = null): Blueprint
+    {
+        return $this->baseTypeDeclaration($columnName, Blueprint::DECIMAL);
+    }
+
+    /* ---------------------------------------------------------------------------------
+     | Constraints
+     | ---------------------------------------------------------------------------------
+     */
+
+    /**
+     * Set column not null
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function notNull($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::NOT_NULL, $columnNames);
+    }
+
+    /**
+     * Set column null
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function null($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::NULL, $columnNames);
+    }
+
+    /**
+     * Set column as primary key
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function primary($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::PRIMARY_KEY, $columnNames);
+    }
+
+    /**
+     * Set column as unique key
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function unique($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::UNIQUE, $columnNames);
+    }
+
+    /**
+     * Set column as auto increment
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function autoIncrement($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::AUTO_INCREMENT, $columnNames);
+    }
+
+    /**
+     * Set column default value
+     *
+     * @param string $value
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function default(string $value, $columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::DEFAULT . "(" . (string)$value . ")", $columnNames);
+    }
+
+    /**
+     * Set column as auto increment
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function index($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::INDEX, $columnNames);
+    }
+
+    /**
+     * Set column as unsigned
+     *
+     * @param array|string|null $columnNames
+     * @return Blueprint
+     */
+    public function unsigned($columnNames = null): Blueprint
+    {
+        return $this->constraintDeclaration(Blueprint::UNSIGNED, $columnNames);
+    }
+
+    /* ---------------------------------------------------------------------------------
+     | Helper Functions
+     | ---------------------------------------------------------------------------------
+     */
 
     /**
      * Create table MySQL query
@@ -85,9 +283,9 @@ class Blueprint
         }
 
         /* Table Name */
-        $query .= $this->tableName . " ";
+        $query .= "`" . $this->tableName . "` ";
 
-        $query .= "(";
+        $query .= "(\n";
 
         /* Columns */
         $query .= $this->parseColumns();
@@ -95,89 +293,9 @@ class Blueprint
         /* Constraints */
         $query .= $this->parseConstraints();
 
-        $query .= ");";
+        $query .= "\n);";
 
         return $query;
-    }
-
-    /**
-     * Create a string type column
-     *
-     * @param string $columnName
-     * @param int $length
-     * @return Blueprint
-     */
-    public function string(string $columnName, int $length = Blueprint::DEFAULT_STRING_LENGTH): Blueprint
-    {
-        return $this->baseTypeDeclaration($columnName, Blueprint::STRING_BASETYPE, $length);
-    }
-
-    /**
-     * Create an int type column
-     *
-     * @param string $columnName
-     * @param int $length
-     * @return Blueprint
-     */
-    public function int(string $columnName, int $length = Blueprint::DEFAULT_INT_LENGTH): Blueprint
-    {
-        return $this->baseTypeDeclaration($columnName, Blueprint::INT_BASETYPE, $length);
-    }
-
-    /**
-     * Set column not null
-     *
-     * @param array|string|null $columnNames
-     * @return Blueprint
-     */
-    public function notNull($columnNames = null): Blueprint
-    {
-        return $this->constraintDeclaration(
-            Blueprint::NOT_NULL,
-            isset($columnNames) ? $columnNames : null
-        );
-    }
-
-    /**
-     * Set column as primary key
-     *
-     * @param array|string|null $columnNames
-     * @return Blueprint
-     */
-    public function primary($columnNames = null): Blueprint
-    {
-        return $this->constraintDeclaration(
-            Blueprint::PRIMARY_KEY,
-            isset($columnNames) ? $columnNames : null
-        );
-    }
-
-    /**
-     * Set column as unique key
-     *
-     * @param array|string|null $columnNames
-     * @return Blueprint
-     */
-    public function unique($columnNames = null): Blueprint
-    {
-        return $this->constraintDeclaration(
-            Blueprint::UNIQUE,
-            isset($columnNames) ? $columnNames : null
-        );
-    }
-
-    /**
-     * Set column as auto increment
-     *
-     * @param array|string|null $columnNames
-     * @return Blueprint
-     */
-    public function autoIncrement($columnNames = null): Blueprint
-    {
-        return $this->constraintDeclaration(
-            Blueprint::AUTO_INCREMENT,
-            isset($columnNames) ? $columnNames : null
-        );
     }
 
     /**
@@ -192,13 +310,11 @@ class Blueprint
     {
         $this->mostRecentColumn = $columnName;
 
-        $type = $baseType . '(';
+        $type = $baseType;
 
         if (isset($length)) {
-            $type .= (string)$length;
+            $type .= '(' . (string)$length . ')';
         }
-
-        $type .= ')';
 
         $this->columns[$columnName] = [$type];
 
@@ -231,11 +347,12 @@ class Blueprint
     private function parseColumns(): string
     {
         $columns = [];
+
         foreach ($this->columns as $field => $declaration) {
-            $columns[] = $field . " " . implode(" ", $declaration);
+            $columns[] = "\t`" . $field . "` " . implode(" ", $declaration);
         }
 
-        return implode(", ", $columns);
+        return implode(", \n", $columns);
     }
 
     /**
@@ -246,10 +363,12 @@ class Blueprint
     private function parseConstraints(): string
     {
         $constraints = [];
+
         foreach ($this->constraints as $constraint => $field) {
-            $constraints[] = ($constraint . " (") . (is_array($field) ? implode(", ", $field) : $field) . ") ";
+            $constraints[] = "\t" . $constraint . " (`" .
+                (is_array($field) ? implode("`, `", $field) : $field) . "`)";
         }
 
-        return $constraints ? ", " . implode(", ", $constraints) : '';
+        return $constraints ? ", \n" . implode(", \n", $constraints) : '';
     }
 }

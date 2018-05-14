@@ -40,6 +40,13 @@ class Blueprint
     private $constraints = [];
 
     /**
+     * Table options
+     *
+     * @var array $options
+     */
+    private $options = [];
+
+    /**
      * Table building constants
      */
     private const DEFAULT_STRING_LENGTH = 50;
@@ -70,6 +77,16 @@ class Blueprint
     private const DEFAULT = 'DEFAULT';
     private const INDEX = 'INDEX';
     private const UNSIGNED = 'UNSIGNED';
+
+    /**
+     * Table Options
+     */
+    private const TABLE_AUTO_INCREMENT = 'AUTO_INCREMENT';
+    private const CHARACTER_SET = 'CHARACTER SET';
+    private const COMMENT = 'COMMENT';
+    private const ENGINE = 'ENGINE';
+    private const MAX_ROWS = 'MAX_ROWS';
+    private const MIN_ROWS = 'MIN_ROWS';
 
     /**
      * Blueprint constructor.
@@ -292,6 +309,77 @@ class Blueprint
     }
 
     /* ---------------------------------------------------------------------------------
+     | Table Options
+     | ---------------------------------------------------------------------------------
+     */
+
+    /**
+     * Table option auto increment value
+     *
+     * @param int $value
+     * @return Blueprint
+     */
+    public function tableAutoIncrement(int $value): Blueprint
+    {
+        return $this->optionDeclaration(Blueprint::TABLE_AUTO_INCREMENT, $value);
+    }
+
+    /**
+     * Table option char set
+     *
+     * @param string $charsetName
+     * @return Blueprint
+     */
+    public function characterSet(string $charsetName)
+    {
+        return $this->optionDeclaration(Blueprint::CHARACTER_SET, $charsetName);
+    }
+
+    /**
+     * Table option comment
+     *
+     * @param string $comment
+     * @return Blueprint
+     */
+    public function comment(string $comment)
+    {
+        return $this->optionDeclaration(Blueprint::COMMENT, $comment);
+    }
+
+    /**
+     * Table option engine
+     *
+     * @param string $engineName
+     * @return Blueprint
+     */
+    public function engine(string $engineName)
+    {
+        return $this->optionDeclaration(Blueprint::ENGINE, $engineName);
+    }
+
+    /**
+     * Table option max rows
+     *
+     * @param int $value
+     * @return Blueprint
+     */
+    public function maxRows(int $value)
+    {
+        return $this->optionDeclaration(Blueprint::MAX_ROWS, $value);
+    }
+
+    /**
+     * Table option min rows
+     *
+     * @param int $value
+     * @return Blueprint
+     */
+    public function minRows(int $value)
+    {
+        return $this->optionDeclaration(Blueprint::MIN_ROWS, $value);
+    }
+
+    /* ---------------------------------------------------------------------------------
      | Helper Functions
      | ---------------------------------------------------------------------------------
      */
@@ -321,7 +409,12 @@ class Blueprint
         /* Constraints */
         $query .= $this->parseConstraints();
 
-        $query .= "\n);";
+        $query .= "\n) ";
+
+        /* Table Options */
+        $query .= $this->parseOptions();
+
+        $query .= ";";
 
         return $query;
     }
@@ -368,6 +461,20 @@ class Blueprint
     }
 
     /**
+     * Create table option
+     *
+     * @param string $option
+     * @param string $value
+     * @return Blueprint
+     */
+    private function optionDeclaration(string $option, $value): Blueprint
+    {
+        $this->options[$option] = $value;
+
+        return $this;
+    }
+
+    /**
      * Parse columns to string
      *
      * @return string
@@ -398,5 +505,21 @@ class Blueprint
         }
 
         return $constraints ? ", \n" . implode(", \n", $constraints) : '';
+    }
+
+    /**
+     * Parse table options to string
+     *
+     * @return string
+     */
+    private function parseOptions(): string
+    {
+        $options = [];
+
+        foreach ($this->options as $option => $value) {
+            $options[] = $option . "=" . (is_string($value) ? "'" . $value . "'" : (string)$value);
+        }
+
+        return implode(" ", $options);
     }
 }

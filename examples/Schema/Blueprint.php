@@ -22,6 +22,9 @@ $table->double('double', 3, 1);
 
 $table->unique(['id', 'someStr']);
 
+$table->foreign('someStr')->references('other_table')
+    ->onDelete(Blueprint::CASCADE)->onUpdate(Blueprint::CASCADE);
+
 $table->tableAutoIncrement(3);
 
 $table->characterSet('utf8mb4');

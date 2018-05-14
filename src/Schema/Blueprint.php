@@ -19,11 +19,18 @@ class Blueprint
     private $tableName = '';
 
     /**
-     * Column name
+     * Track the most recent editing column
      *
      * @var string $columnName
      */
     private $mostRecentColumn;
+
+    /**
+     * Track the most recent editing relationship
+     *
+     * @var string $mostRecentRelationship
+     */
+    private $mostRecentRelationship;
 
     /**
      * Columns for building tables
@@ -38,6 +45,13 @@ class Blueprint
      * @var array $constraints
      */
     private $constraints = [];
+
+    /**
+     * Foreign key constraints
+     *
+     * @var array $relationships
+     */
+    private $relationships = [];
 
     /**
      * Table options
@@ -77,6 +91,20 @@ class Blueprint
     private const DEFAULT = 'DEFAULT';
     private const INDEX = 'INDEX';
     private const UNSIGNED = 'UNSIGNED';
+
+    /**
+     * Relationships
+     */
+    private const CONSTRAINT = 'CONSTRAINT';
+    private const FOREIGN = 'FOREIGN KEY';
+    private const REFERENCES = 'REFERENCES';
+    private const ON_DELETE = 'ON DELETE';
+    private const ON_UPDATE = 'ON UPDATE';
+    public const RESTRICT = 'RESTRICT';
+    public const CASCADE = 'CASCADE';
+    public const SET_NULL = 'SET NULL';
+    public const NO_ACTION = 'NO ACTION';
+    public const SET_DEFAULT = 'SET DEFAULT';
 
     /**
      * Table Options
@@ -309,6 +337,59 @@ class Blueprint
     }
 
     /* ---------------------------------------------------------------------------------
+     | Relationships
+     | ---------------------------------------------------------------------------------
+     */
+
+    /**
+     * CONSTRAINT ... FOREIGN KEY ...
+     *
+     * @param string $columnName
+     * @param string|null $constraintName
+     * @return Blueprint
+     */
+    public function foreign(string $columnName, string $constraintName = null): Blueprint
+    {
+        return $this->relationshipColumnDeclaration($columnName, $constraintName);
+    }
+
+    /**
+     * REFERENCES ...
+     *
+     * @param string $foreignTable
+     * @param string|null $foreignColumn
+     * @return Blueprint
+     */
+    public function references(string $foreignTable, string $foreignColumn = null): Blueprint
+    {
+        $value = $foreignTable . $foreignColumn ? "(" . $foreignColumn . ")" : '';
+
+        return $this->relationshipConstraintDeclaration(Blueprint::REFERENCES, $value);
+    }
+
+    /**
+     * ON DELETE ...
+     *
+     * @param string $action
+     * @return Blueprint
+     */
+    public function onDelete(string $action): Blueprint
+    {
+        return $this->relationshipConstraintDeclaration(Blueprint::ON_DELETE, $action);
+    }
+
+    /**
+     * ON UPDATE ...
+     *
+     * @param string $action
+     * @return Blueprint
+     */
+    public function onUpdate(string $action): Blueprint
+    {
+        return $this->relationshipConstraintDeclaration(Blueprint::ON_UPDATE, $action);
+    }
+
+    /* ---------------------------------------------------------------------------------
      | Table Options
      | ---------------------------------------------------------------------------------
      */
@@ -425,6 +506,7 @@ class Blueprint
      * @param string $columnName
      * @param string $baseType
      * @param int|null $length
+     * @param int|null $decimal
      * @return Blueprint
      */
     private function baseTypeDeclaration(string $columnName, string $baseType, int $length = null, int $decimal = null): Blueprint
@@ -456,6 +538,40 @@ class Blueprint
         } elseif (isset($this->mostRecentColumn)) {
             $this->columns[$this->mostRecentColumn][] = $constraintType;
         }
+
+        return $this;
+    }
+
+    /**
+     * Create relationship column
+     *
+     * @param string $columnName
+     * @param string|null $constraintName
+     * @return Blueprint
+     */
+    private function relationshipColumnDeclaration(string $columnName, string $constraintName = null): Blueprint
+    {
+        $this->mostRecentRelationship = $columnName;
+
+        $this->relationships[$columnName] = [];
+
+        if ($constraintName) {
+            $this->relationships[$columnName][Blueprint::CONSTRAINT] = $constraintName;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Fill out relationship
+     *
+     * @param string $constraint
+     * @param string $value
+     * @return Blueprint
+     */
+    private function relationshipConstraintDeclaration(string $constraint, string $value): Blueprint
+    {
+        $this->relationships[$this->mostRecentRelationship][$constraint] = $value;
 
         return $this;
     }

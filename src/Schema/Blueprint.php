@@ -66,6 +66,11 @@ class Blueprint
     private const DEFAULT_STRING_LENGTH = 50;
     private const DEFAULT_INT_LENGTH = 11;
     private const DEFAULT_TEXT_LENGTH = 65535;
+    private const DEFAULT_FLOAT_LENGTH = 11;
+    private const DEFAULT_FLOAT_DECIMALS = 2;
+    private const DEFAULT_DOUBLE_LENGTH = 11;
+    private const DEFAULT_DOUBLE_DECIMALS = 2;
+    private const DEFAULT_DECIMAL_LENGTH = 11;
 
     /**
      * Base Types
@@ -211,8 +216,11 @@ class Blueprint
      * @param int $decimals
      * @return Blueprint
      */
-    public function float(string $columnName, int $length, int $decimals): Blueprint
-    {
+    public function float(
+        string $columnName,
+        int $length = Blueprint::DEFAULT_FLOAT_LENGTH,
+        int $decimals = Blueprint::DEFAULT_FLOAT_DECIMALS
+    ): Blueprint {
         return $this->baseTypeDeclaration($columnName, Blueprint::FLOAT, $length, $decimals);
     }
 
@@ -224,8 +232,11 @@ class Blueprint
      * @param int $decimals
      * @return Blueprint
      */
-    public function double(string $columnName, int $length, int $decimals): Blueprint
-    {
+    public function double(
+        string $columnName,
+        int $length = Blueprint::DEFAULT_DOUBLE_LENGTH,
+        int $decimals = Blueprint::DEFAULT_DOUBLE_DECIMALS
+    ): Blueprint {
         return $this->baseTypeDeclaration($columnName, Blueprint::DOUBLE, $length, $decimals);
     }
 
@@ -237,8 +248,11 @@ class Blueprint
      * @param int|null $decimals
      * @return Blueprint
      */
-    public function decimal(string $columnName, int $length, int $decimals = null): Blueprint
-    {
+    public function decimal(
+        string $columnName,
+        int $length = Blueprint::DEFAULT_DECIMAL_LENGTH,
+        int $decimals = null
+    ): Blueprint {
         return $this->baseTypeDeclaration($columnName, Blueprint::DECIMAL, $length, $decimals);
     }
 

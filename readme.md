@@ -6,9 +6,21 @@ The package contains functions to interact with MySQL database.
 
 Package Namespace: `Senhung\DB`
 
+## Setup
+
+1. Composer Install
+
+```bash
+$ composer require senhung/php-database
+```
+
+2. Config
+
+Copy `.env.example` to `.env` and fill out the database settings
+
 ## Examples
 
-Use examples are in `examples/...`
+Usage examples are in `examples/...`
 
 run the following to test all examples:
 
@@ -16,7 +28,7 @@ run the following to test all examples:
 $ php example
 ```
 
-## Classes Usage
+## How To Use
 
 ### Database
 

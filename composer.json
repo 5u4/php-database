@@ -1,6 +1,6 @@
 {
-    "name": "senhung/php-database",
-    "description": "PHP interactions with MySQL",
+    "name": "senhung/database-interaction",
+    "description": "PHP interactions with databases",
     "license": "MIT",
     "authors": [
         {
@@ -24,7 +24,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "senhung/config-read-write": "~1.1.0",
-        "senhung/php-loader": "~1.1.0"
+        "senhung/config-read-write": "~2.0.0",
+        "senhung/loader": "~2.0.0"
     }
 }

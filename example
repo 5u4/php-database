@@ -5,13 +5,6 @@ namespace Senhung\DB\Test;
 require_once 'vendor/autoload.php';
 
 use Senhung\Loader\Loader;
-use Senhung\Config\Configuration;
-
-/* Set config path */
-Configuration::setPath('.env');
-
-/* Initialize config */
-Configuration::initializeConfigs();
 
 /**
  * @param string $functionName

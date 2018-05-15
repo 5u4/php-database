@@ -11,7 +11,7 @@ Package Namespace: `Senhung\DB`
 1. Composer Install
 
 ```bash
-$ composer require senhung/php-database
+$ composer require senhung/database-interaction
 ```
 
 2. Config

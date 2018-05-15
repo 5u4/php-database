@@ -1,10 +1,10 @@
-# PHP MySQL Database
+# PHP Database
 
 ## Description
 
 The package contains functions to interact with MySQL database.
 
-Package Namespace: `Senhung\MySQL`
+Package Namespace: `Senhung\DB`
 
 ## Examples
 

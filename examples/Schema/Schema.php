@@ -1,13 +1,13 @@
 <?php
 
-namespace Senhung\MySQL\Test\Schema;
+namespace Senhung\DB\Test\Schema;
 
-use Senhung\MySQL\Schema\Blueprint;
-use Senhung\MySQL\Schema\Schema;
+use Senhung\DB\Schema\Blueprint;
+use Senhung\DB\Schema\Schema;
 
-\Senhung\MySQL\Test\indicate('Schema', '');
+\Senhung\DB\Test\indicate('Schema', '');
 
-//Schema::create('users', function (Blueprint $table) {
-//    $table->int('id')->primary()->autoIncrement();
-//    $table->string('name')->unique();
-//});
+Schema::create('users', function (Blueprint $table) {
+    $table->int('id')->primary()->autoIncrement();
+    $table->string('name')->unique();
+});

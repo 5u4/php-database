@@ -1,6 +1,6 @@
 <?php
 
-namespace Senhung\MySQL\Database;
+namespace Senhung\DB\Database;
 
 class QueryBuilder
 {

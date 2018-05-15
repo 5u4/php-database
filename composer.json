@@ -1,5 +1,5 @@
 {
-    "name": "senhung/php-mysql-database",
+    "name": "senhung/php-database",
     "description": "PHP interactions with MySQL",
     "license": "MIT",
     "authors": [
@@ -10,15 +10,21 @@
     ],
     "autoload": {
         "psr-4": {
-            "Senhung\\MySQL\\Connection\\": "src/Database"
+            "Senhung\\DB\\Database\\Connection\\": "src/Database",
+            "Senhung\\DB\\Database\\QueryBuilder\\": "src/Database",
+            "Senhung\\DB\\Schema\\Blueprint\\": "src/Schema",
+            "Senhung\\DB\\Schema\\Schema\\": "src/Schema"
         },
         "files": [
-            "src/Database/Connection.php"
+            "src/Database/Connection.php",
+            "src/Database/QueryBuilder.php",
+            "src/Schema/Blueprint.php",
+            "src/Schema/Schema.php"
         ]
     },
     "require": {
         "php": ">=7.1.0",
-        "senhung/config-read-write": ">=1.1.0",
-        "senhung/php-loader": ">=1.1.0"
+        "senhung/config-read-write": "~1.1.0",
+        "senhung/php-loader": "~1.1.0"
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Senhung\MySQL\Schema;
+namespace Senhung\DB\Schema;
 
-use Senhung\MySQL\Database\Connection;
+use Senhung\DB\Database\Connection;
 
 class Schema
 {

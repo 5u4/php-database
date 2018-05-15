@@ -1,6 +1,6 @@
 <?php
 
-namespace Senhung\MySQL\Test;
+namespace Senhung\DB\Test;
 
 require_once 'vendor/autoload.php';
 

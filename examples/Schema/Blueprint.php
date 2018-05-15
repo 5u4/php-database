@@ -1,10 +1,10 @@
 <?php
 
-namespace Senhung\MySQL\Test\Schema;
+namespace Senhung\DB\Test\Schema;
 
-use Senhung\MySQL\Schema\Blueprint;
+use Senhung\DB\Schema\Blueprint;
 
-\Senhung\MySQL\Test\indicate('Blueprint', '');
+\Senhung\DB\Test\indicate('Blueprint', '');
 
 $table = new Blueprint('users');
 

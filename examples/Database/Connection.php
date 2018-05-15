@@ -1,10 +1,10 @@
 <?php
 
-namespace Senhung\MySQL\Test\Database;
+namespace Senhung\DB\Test\Database;
 
-use Senhung\MySQL\Database\Connection;
+use Senhung\DB\Database\Connection;
 
-\Senhung\MySQL\Test\indicate('Connection', 'Connect to MySQL database');
+\Senhung\DB\Test\indicate('Connection', 'Connect to MySQL database');
 
 $db = new Connection();
 

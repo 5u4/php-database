@@ -1,10 +1,10 @@
 <?php
 
-namespace Senhung\MySQL\Test\Database;
+namespace Senhung\DB\Test\Database;
 
-use Senhung\MySQL\Database\QueryBuilder;
+use Senhung\DB\Database\QueryBuilder;
 
-\Senhung\MySQL\Test\indicate('QueryBuilder', 'Build queries');
+\Senhung\DB\Test\indicate('QueryBuilder', 'Build queries');
 
 $query = new QueryBuilder();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Senhung\MySQL\Schema;
+namespace Senhung\DB\Schema;
 
 class Blueprint
 {

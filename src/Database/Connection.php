@@ -1,6 +1,6 @@
 <?php
 
-namespace Senhung\MySQL\Database;
+namespace Senhung\DB\Database;
 
 use mysqli;
 use Senhung\Config\Configuration;

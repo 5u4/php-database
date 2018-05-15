@@ -7,7 +7,7 @@ Example:
 ```php
 <?php
 
-use Senhung\MySQL\Database\QueryBuilder;
+use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
@@ -22,7 +22,7 @@ Example:
 ```php
 <?php
 
-use Senhung\MySQL\Database\QueryBuilder;
+use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
@@ -35,7 +35,7 @@ Or you can do it like:
 ```php
 <?php
 
-use Senhung\MySQL\Database\QueryBuilder;
+use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
@@ -50,7 +50,7 @@ Example:
 ```php
 <?php
 
-use Senhung\MySQL\Database\QueryBuilder;
+use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
@@ -63,7 +63,7 @@ print $query->update('users')->set(['name' => 'senhung'])->where(['name', '=', '
 ```php
 <?php
 
-use Senhung\MySQL\Database\QueryBuilder;
+use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 

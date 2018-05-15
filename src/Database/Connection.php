@@ -61,6 +61,16 @@ class Connection
     }
 
     /**
+     * Close database
+     *
+     * @return bool
+     */
+    public function close(): bool
+    {
+        return $this->database->close();
+    }
+
+    /**
      * Parse mysql result to array
      *
      * @param \mysqli_result $result

@@ -31,6 +31,7 @@ class Schema
         try {
             $db = new Connection($database);
             $db->query($table);
+            $db->close();
         }
 
         /* Error Handling */

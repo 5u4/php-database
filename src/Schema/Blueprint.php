@@ -362,7 +362,7 @@ class Blueprint
      */
     public function references(string $foreignTable, string $foreignColumn = null): Blueprint
     {
-        $value = $foreignTable . $foreignColumn ? "(" . $foreignColumn . ")" : '';
+        $value = $foreignTable . ($foreignColumn ? "(" . $foreignColumn . ")" : '');
 
         return $this->relationshipConstraintDeclaration(Blueprint::REFERENCES, $value);
     }
@@ -489,6 +489,9 @@ class Blueprint
 
         /* Constraints */
         $query .= $this->parseConstraints();
+
+        /* Relationships */
+        $query .= $this->parseRelationships();
 
         $query .= "\n) ";
 
@@ -621,6 +624,45 @@ class Blueprint
         }
 
         return $constraints ? ", \n" . implode(", \n", $constraints) : '';
+    }
+
+    /**
+     * Parse relationships to string
+     *
+     * @return string
+     */
+    private function parseRelationships(): string
+    {
+        $relationships = [];
+
+        foreach ($this->relationships as $localColumn => $constraints) {
+            $relationship = "\t";
+
+            /* CONSTRAINT ... */
+            if (isset($constraints[Blueprint::CONSTRAINT])) {
+                $relationship .= Blueprint::CONSTRAINT . " " . $constraints[Blueprint::CONSTRAINT] . " ";
+            }
+
+            /* FOREIGN KEY ... */
+            $relationship .= Blueprint::FOREIGN . " (" . $localColumn . ") ";
+
+            /* REFERENCES ... */
+            $relationship .= Blueprint::REFERENCES . " " . $constraints[Blueprint::REFERENCES] . " ";
+
+            /* ON DELETE ... */
+            if (isset($constraints[Blueprint::ON_DELETE])) {
+                $relationship .= Blueprint::ON_DELETE . " " . $constraints[Blueprint::ON_DELETE] . " ";
+            }
+
+            /* ON UPDATE ... */
+            if (isset($constraints[Blueprint::ON_UPDATE])) {
+                $relationship .= Blueprint::ON_UPDATE . " " . $constraints[Blueprint::ON_UPDATE] . " ";
+            }
+
+            $relationships[] = rtrim($relationship);
+        }
+
+        return ($relationships ? ", \n" : "") . implode(", \n", $relationships);
     }
 
     /**

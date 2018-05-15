@@ -25,6 +25,8 @@ $table->unique(['id', 'someStr']);
 $table->foreign('someStr')->references('other_table')
     ->onDelete(Blueprint::CASCADE)->onUpdate(Blueprint::CASCADE);
 
+$table->foreign('something')->references('another_table', 'its_column');
+
 $table->tableAutoIncrement(3);
 
 $table->characterSet('utf8mb4');

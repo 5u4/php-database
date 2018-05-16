@@ -11,7 +11,7 @@ use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
-/* SELECT * FROM users WHERE `name` = alex */
+/* SELECT * FROM `users` WHERE `name`='alex' */
 print $query->select('*')->from('users')->where(['name', '=', 'alex']);
 ```
 
@@ -39,7 +39,7 @@ use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
-/* INSERT INTO `users` (`name`) SELECT alex SELECT senhung */
+/* INSERT INTO `users` (`name`) SELECT 'alex' SELECT 'senhung' */
 print $query->insertInto('users', ['name'])->select(['alex'])->select(['senhung']);
 ```
 
@@ -54,7 +54,7 @@ use Senhung\DB\Database\QueryBuilder;
 
 $query = new QueryBuilder();
 
-/* UPDATE users SET name='senhung' WHERE `name` = alex */
+/* UPDATE `users` SET `name`='senhung' WHERE `name`='alex' */
 print $query->update('users')->set(['name' => 'senhung'])->where(['name', '=', 'alex']);
 ```
 

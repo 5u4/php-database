@@ -39,4 +39,29 @@ class Schema
             die($exception->getMessage());
         }
     }
+
+    /**
+     * Drop Table
+     *
+     * @param string $tableName
+     * @param bool $ifExists
+     * @param string $database
+     */
+    public static function drop(string $tableName, bool $ifExists = true, string $database = 'DB'): void
+    {
+        /* Drop Query */
+        $query = "DROP TABLE " . ($ifExists ? "IF EXISTS " : "") . "`" . $tableName . "`;";
+
+        /* Drop Table */
+        try {
+            $db = new Connection($database);
+            $db->query($query);
+            $db->close();
+        }
+
+        /* Error Handling */
+        catch (\Exception $exception) {
+            die($exception->getMessage());
+        }
+    }
 }

@@ -41,8 +41,13 @@ class QueryBuilder
         $this->query .= 'SELECT ';
 
         if (is_array($columns)) {
-            $this->query .= implode(", ", $columns) . ' ';
+            $this->query .= "'" . implode("', '", $columns) . "' ";
         } else {
+            /* Check select all */
+            if ($columns != '*') {
+                $columns = "'" . $columns . "'";
+            }
+
             $this->query .= $columns . ' ';
         }
 
@@ -57,7 +62,7 @@ class QueryBuilder
      */
     public function from(string $table): QueryBuilder
     {
-        $this->query .= 'FROM ' . $table . ' ';
+        $this->query .= 'FROM `' . $table . '` ';
 
         return $this;
     }
@@ -74,7 +79,7 @@ class QueryBuilder
 
         /* One Condition: ['name', '=', 'alex'] */
         if (gettype($conditions[0]) != 'array') {
-            $this->query .= '`' . $conditions[0] . '` ' . $conditions[1] . ' ' . $conditions[2] . ' ';
+            $this->query .= "`" . $conditions[0] . "`" . $conditions[1] . "'" . $conditions[2] . "' ";
         }
 
         /* Multiple Conditions: [
@@ -127,7 +132,7 @@ class QueryBuilder
      */
     public function update(string $table): QueryBuilder
     {
-        $this->query .= "UPDATE " . $table . ' ';
+        $this->query .= "UPDATE `" . $table . "` ";
 
         return $this;
     }
@@ -145,81 +150,10 @@ class QueryBuilder
         $attributes = [];
 
         foreach ($fields as $field => $value) {
-            $attributes[] = $field . "='" . $value . "' ";
+            $attributes[] = "`" . $field . "`='" . $value . "' ";
         }
 
         $this->query .= implode(', ', $attributes);
-
-        return $this;
-    }
-
-    /**
-     * CONSTRAINT ...
-     *
-     * @param string $symbol
-     * @return QueryBuilder
-     */
-    public function constraint(string $symbol): QueryBuilder
-    {
-        $this->query .= "CONSTRAINT ";
-
-        return $this;
-    }
-
-    /**
-     * FOREIGN KEY ...
-     *
-     * @param string $indexName
-     * @param string $columnName
-     * @return QueryBuilder
-     */
-    public function foreign(string $indexName, string $columnName): QueryBuilder
-    {
-        $this->query .= "FOREIGN KEY " . $indexName . " (" . $columnName .") ";
-
-        return $this;
-    }
-
-    /**
-     * REFERENCES ...
-     *
-     * @param string $indexName
-     * @param string|null $columnName
-     * @return QueryBuilder
-     */
-    public function references(string $indexName, string $columnName = null): QueryBuilder
-    {
-        $this->query .= "REFERENCES " . $indexName . " ";
-
-        if ($columnName) {
-            $this->query .= "(" . $columnName .") ";
-        }
-
-        return $this;
-    }
-
-    /**
-     * ON DELETE ...
-     *
-     * @param string $referenceOption
-     * @return QueryBuilder
-     */
-    public function onDelete(string $referenceOption): QueryBuilder
-    {
-        $this->query .= "ON DELETE " . $referenceOption . " ";
-
-        return $this;
-    }
-
-    /**
-     * ON UPDATE ...
-     *
-     * @param string $referenceOption
-     * @return QueryBuilder
-     */
-    public function onUpdate(string $referenceOption): QueryBuilder
-    {
-        $this->query .= "ON UPDATE " . $referenceOption . " ";
 
         return $this;
     }

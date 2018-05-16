@@ -31,7 +31,7 @@ $table->double('double', 3, 1);
 $table->unique(['id', 'someStr']);
 
 /* Create a foreign key of 'someStr' referencing primary key of 'other_table' */
-$table->foreign('someStr')->references('other_table')
+$table->foreign('someStr')->references('other_table', 'column')
     /* having rules on delete cascade and on update cascade */
     ->onDelete(Blueprint::CASCADE)->onUpdate(Blueprint::CASCADE);
 

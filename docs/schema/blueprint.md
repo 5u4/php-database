@@ -183,7 +183,7 @@ Blueprint::foreign(string $columnName [, string $constraintName]): self
 #### References
 
 ```php
-Blueprint::references(string $foreignTable [, string $foreignColumn]): self
+Blueprint::references(string $foreignTable, string $foreignColumn): self
 ```
 
 #### On Delete

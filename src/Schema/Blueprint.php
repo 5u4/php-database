@@ -371,10 +371,10 @@ class Blueprint
      * REFERENCES ...
      *
      * @param string $foreignTable
-     * @param string|null $foreignColumn
+     * @param string $foreignColumn
      * @return Blueprint
      */
-    public function references(string $foreignTable, string $foreignColumn = null): Blueprint
+    public function references(string $foreignTable, string $foreignColumn): Blueprint
     {
         $value = $foreignTable . ($foreignColumn ? "(" . $foreignColumn . ")" : '');
 

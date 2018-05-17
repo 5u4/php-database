@@ -61,6 +61,17 @@ class Connection
     }
 
     /**
+     * Get the last inserted row's primary key
+     *
+     * @return mixed
+     */
+    public function lastInsertedId()
+    {
+        // TODO: Compound Primary Key?
+        return $this->database->insert_id;
+    }
+
+    /**
      * Close database
      *
      * @return bool

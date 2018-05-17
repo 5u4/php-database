@@ -10,6 +10,10 @@ Connection::query(string $query [, bool $parse]): array|mysqli_result
 
 `$parse`: if true, return parsed array result, else return mysqli_result
 
+## Last Inserted Id
+
+
+
 ## Close
 
 Close database connection
